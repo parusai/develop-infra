@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('init') {
             steps {
-                sh "terraform init"
+                sh "terraform init -reconfigure -backend-config tfvar/${tfvar.envir}.backend.tfvars"
             }
         }
         stage('planning') {
