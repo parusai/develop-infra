@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+    stages {
+        stage('init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+        stage('planning') {
+            steps {
+                sh "terraform plan --var-file='tfvar/${tfvar.envir}tfvars'"
+            }
+        }
+    
+        stage('applying') {
+            when {
+                branch 'main'
+
+                expression{
+                    return !['none'].contains(tfvar.tenv)
+                }
+
+            }
+            steps {
+                input 'Do you want to apply changes ?'
+                sh "terraform apply --var-file='tfvar/${tfvar.envir}tfvars' --auto-approve"
+            }
+        }
+    
+        stage('destroy') {
+            steps {
+                 input 'Do you want to destroy changes ?'
+                sh "terraform destroy --var-file='tfvar/${tfvar.envir}tfvars' --auto-approve"
+                
+            }
+        }
+    
+
+    }
+}
