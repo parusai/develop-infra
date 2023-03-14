@@ -6,7 +6,7 @@ pipeline {
                 sh "terraform init -reconfigure-backend-config tfvar/${tfvar.envir}.backend.tfvars"
             }
         }
-        stage('planning') {
+        /* stage('planning') {
             steps {
                 sh "terraform plan --var-file=\"tfvar/${tfvar.envir}.tfvars\""
             }
@@ -18,7 +18,7 @@ pipeline {
                 branch 'main'
 
                 expression{
-                    return !['none'].contains(tfvar.tenv)
+                    return !['none'].contains(tfvar.envir)
                 }
 
             }
@@ -34,6 +34,6 @@ pipeline {
                 sh "terraform destroy --var-file=\"tfvar/${tfvar.envir}.tfvars\" --auto-approve"
                 
             }
-        }
+        } */
     }
 }
