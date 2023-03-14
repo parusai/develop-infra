@@ -8,7 +8,7 @@ pipeline {
         }
         /* stage('planning') {
             steps {
-                sh "terraform plan --var-file=\"tfvar/${tfvar.envir}.tfvars\""
+                sh "terraform plan --var-file="tfvar/${tfvar.envir}.tfvars""
             }
         }
     
