@@ -3,38 +3,37 @@ pipeline {
     stages {
         stage('init') {
             steps {
-                sh "terraform init -reconfigure -backend-config tfvar/${tfvar.envir}.backend.tfvars"
+                sh "terraform init -reconfigure-backend-config tfvar/${tfvar.envir}.backend.tfvars"
             }
         }
-        stage('planning') {
+        /* stage('planning') {
             steps {
-                sh "terraform plan --var-file='tfvar/${tfvar.envir}.tfvars'"
+                sh "terraform plan --var-file=\"tfvar/${tfvar.envir}.tfvars\""
             }
         }
     
         stage('applying') {
             when {
+                beforeAgent true
                 branch 'main'
 
                 expression{
-                    return !['none'].contains(tfvar.tenv)
+                    return !['none'].contains(tfvar.envir)
                 }
 
             }
             steps {
                 input 'Do you want to apply changes ?'
-                sh "terraform apply --var-file='tfvar/${tfvar.envir}tfvars' --auto-approve"
+                sh "terraform apply --var-file=\"tfvar/${tfvar.envir}.tfvars\" --auto-approve"
             }
         }
     
         stage('destroy') {
             steps {
-                 input 'Do you want to destroy changes ?'
-                sh "terraform destroy --var-file='tfvar/${tfvar.envir}tfvars' --auto-approve"
+                input 'Do you want to destroy changes ?'
+                sh "terraform destroy --var-file=\"tfvar/${tfvar.envir}.tfvars\" --auto-approve"
                 
             }
-        }
-    
-
+        } */
     }
 }
